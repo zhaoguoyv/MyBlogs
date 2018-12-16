@@ -1,0 +1,20 @@
+{
+  "name": "MyBlogs",
+  "version": "1.0.0",
+  "description": "node项目：简易个人博客。主要使用koa相关模块，pug模板引擎及MongoDB数据库。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhaoguoyv/MyBlogs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhaoguoyv/MyBlogs/issues"
+  },
+  "homepage": "https://github.com/zhaoguoyv/MyBlogs#readme"
+}
