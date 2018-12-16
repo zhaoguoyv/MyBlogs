@@ -16,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/zhaoguoyv/MyBlogs/issues"
   },
-  "homepage": "https://github.com/zhaoguoyv/MyBlogs#readme"
+  "homepage": "https://github.com/zhaoguoyv/MyBlogs#readme",
+  "dependencies": {
+    "koa": "^2.6.2",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "koa-views": "^6.1.4",
+    "pug": "^2.0.3"
+  }
 }
