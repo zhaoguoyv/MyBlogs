@@ -1,5 +1,6 @@
 layui.use(['element', "layer"], function(){
   const element = layui.element;
+  // 弹框样式
   const layer = layui.layer
   const $ = layui.$
 

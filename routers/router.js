@@ -3,10 +3,11 @@ const user = require('../control/user')
 
 const router = new Router
 
-router.get("/", async ctx =>{
+router.get("/", user.keepLog, async ctx =>{
 	// 需要：title 
   await ctx.render("index", {
 		title: "首页",
+		session: ctx.session
 	})
 })
 
@@ -18,11 +19,11 @@ router.get(/^\/user\/(?=reg|login)/, async ctx => {
 })
 
 // 处理用户登录的 post
-router.post("/user/login", async ctx => {
-	const data = ctx.request.body
-})
+router.post("/user/login", user.login)
 
 // 处理用户注册的 post
 router.post("/user/reg", user.reg)
+
+router.get("/user/logout", user.logout)
 
 module.exports = router
