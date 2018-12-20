@@ -97,7 +97,8 @@ exports.login = async ctx => {
 		})
 		ctx.session = {	// 同时将数据保存到 session
 			username,
-			uid: data[0]._id
+			uid: data[0]._id,
+			avatar: data[0].avatar,
 		}
 		await ctx.render("isOK", {
 			status: "登陆成功！"
