@@ -9,6 +9,7 @@ const ArticleSchema = new Schema({
     },  // 关联 users 的表
     content: String,
     tips: String,
+    commentNum: Number,
 }, {
     versionKey: false,
     timestamps: {

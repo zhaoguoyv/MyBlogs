@@ -1,6 +1,8 @@
 const Router = require('koa-router')
 const user = require('../control/user')
 const article = require('../control/article')
+const comment = require('../control/comment')
+const admin = require('../control/admin')
 
 const router = new Router
 
@@ -30,5 +32,21 @@ router.post("/article", user.keepLog, article.add)
 
 // 文章分页动态路由，经典在于有请求再去数据库取值
 router.get("/page/:id", article.getList)
+
+// 文章详情页动态路由
+router.get("/article/:id", user.keepLog, article.details)
+
+// 发表评论
+router.post("/comment", user.keepLog, comment.save)
+
+// 后台动态路由
+router.get("/admin/:id", user.keepLog, admin.index)
+
+// 404 页面
+router.get("*", async ctx => {
+	await ctx.render("404", {
+		title: "404"
+	})
+})
 
 module.exports = router

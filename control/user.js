@@ -24,7 +24,9 @@ exports.reg = async ctx => {
 			// user 模型对象实例
 			const _user = new User({
 				username,
-				password: encrypt(password)
+				password: encrypt(password),
+				commentNum: 0,
+				articleNum: 0,
 			})
 			// 保存到数据库
 			_user.save((err, data) => {
@@ -99,6 +101,7 @@ exports.login = async ctx => {
 			username,
 			uid: data[0]._id,
 			avatar: data[0].avatar,
+			role: data[0].role
 		}
 		await ctx.render("isOK", {
 			status: "登陆成功！"
