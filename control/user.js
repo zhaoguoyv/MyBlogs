@@ -118,9 +118,13 @@ exports.keepLog = async (ctx, next) => {
 	// 如果前端 cookie 还在，但 session 已经过期
 	if(ctx.session.isNew){
 		if(ctx.cookies.get("username")){
+			let uid = ctx.cookies.get("uid")
+			const avatar = await User.findById(uid)
+				.then(data => data.avatar)
 			ctx.session = {
 				username: ctx.cookies.get("username"),
 				uid: ctx.cookies.get("uid"),
+				avatar,
 			}
 		}
 	}
@@ -137,4 +141,23 @@ exports.logout = async ctx => {
 		maxAge: 0
 	})
 	ctx.redirect("/")
+}
+
+exports.upload = async ctx => {
+  const filename = ctx.req.file.filename
+  let data = {}
+  await User.updateOne({_id: ctx.session.uid}, {$set: {avatar: "/avatar/" + filename}}, (err, res) => {
+    if(err){
+      data = {
+        status: 0,
+        message: "上传失败"
+      }
+    }else{
+      data = {
+        status: 1,
+        message: '上传成功'
+      }
+    }
+  })
+  ctx.body =  data
 }

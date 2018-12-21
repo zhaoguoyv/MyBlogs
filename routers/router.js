@@ -3,6 +3,7 @@ const user = require('../control/user')
 const article = require('../control/article')
 const comment = require('../control/comment')
 const admin = require('../control/admin')
+const upload = require('../util/upload')
 
 const router = new Router
 
@@ -41,6 +42,15 @@ router.post("/comment", user.keepLog, comment.save)
 
 // 后台动态路由
 router.get("/admin/:id", user.keepLog, admin.index)
+
+// 头像上传
+router.post("/upload", user.keepLog, upload.single("file"), user.upload)
+
+// 获取用户所有评论
+router.get("/user/comments", user.keepLog, comment.comlist)
+
+// 删除用户所有评论
+router.del("/comment/:id", user.keepLog, comment.del)
 
 // 404 页面
 router.get("*", async ctx => {

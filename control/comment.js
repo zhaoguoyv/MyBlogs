@@ -42,3 +42,43 @@ exports.save = async ctx => {
     })
     ctx.body = message
 }
+
+exports.comlist = async ctx => {
+  const uid = ctx.session.uid
+
+  const data = await Comment.find({form: uid}).populate("article", "title")
+
+  ctx.body = {
+    code: 0,
+    count: data.length,
+    data,
+  }
+}
+
+exports.del = async ctx => {
+  const commentId = ctx.params.id
+
+  let isOK = true
+  let articleId, uid
+
+  await Comment.findById(commentId, (err, data) => {
+    if(err){
+      isOK = false
+      return
+    }else{
+      articleId = data.article
+      uid = data.form
+    }
+  })
+
+  await Article.update({_id: articleId}, {$inc: {commentNum: -1}})
+  await User.update({_id: uid}, {$inc: {commentNum: -1}})
+  await Comment.deleteOne({_id: commentId})
+
+  if(isOK){
+    ctx.body = {
+      state: 1,
+      message: "删除成功！"
+    }
+  }
+}
