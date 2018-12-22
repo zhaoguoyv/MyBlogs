@@ -52,6 +52,12 @@ router.get("/user/comments", user.keepLog, comment.comlist)
 // 删除用户所有评论
 router.del("/comment/:id", user.keepLog, comment.del)
 
+// 获取用户所有文章
+router.get("/user/articles", user.keepLog, article.artlist)
+
+// 删除用户所有评论
+router.del("/article/:id", user.keepLog, article.del)
+
 // 404 页面
 router.get("*", async ctx => {
 	await ctx.render("404", {

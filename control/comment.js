@@ -1,11 +1,6 @@
-const { db } = require('../Schema/config')
-const ArticleSchema = require('../Schema/article')
-const UserSchema = require('../Schema/user')
-const CommentSchema = require('../Schema/comment')
-
-const Article = db.model("articles", ArticleSchema)
-const User = db.model("users", UserSchema)
-const Comment = db.model("comments", CommentSchema)
+const Article = require('../Models/article')
+const User = require('../Models/user')
+const Comment = require('../Models/comment')
 
 exports.save = async ctx => {
   let message = {
@@ -58,27 +53,19 @@ exports.comlist = async ctx => {
 exports.del = async ctx => {
   const commentId = ctx.params.id
 
-  let isOK = true
-  let articleId, uid
-
-  await Comment.findById(commentId, (err, data) => {
-    if(err){
-      isOK = false
-      return
-    }else{
-      articleId = data.article
-      uid = data.form
-    }
-  })
-
-  await Article.update({_id: articleId}, {$inc: {commentNum: -1}})
-  await User.update({_id: uid}, {$inc: {commentNum: -1}})
-  await Comment.deleteOne({_id: commentId})
-
-  if(isOK){
-    ctx.body = {
-      state: 1,
-      message: "删除成功！"
-    }
+  let res = {
+    state: 1,
+    message: "删除成功！"
   }
+
+  Comment.findById(commentId)
+    .then(data => data.remove())
+    .catch(err => {
+      res = {
+        state: 0,
+        message: err
+      }
+    })
+
+    ctx.body = res
 }

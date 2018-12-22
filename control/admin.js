@@ -1,14 +1,9 @@
 const fs = require('fs')
 const { join } = require('path')
 
-const { db } = require('../Schema/config')
-const ArticleSchema = require('../Schema/article')
-const UserSchema = require('../Schema/user')
-const CommentSchema = require('../Schema/comment')
-
-const Article = db.model("articles", ArticleSchema)
-const User = db.model("users", UserSchema)
-const Comment = db.model("comments", CommentSchema)
+const Article = require('../Models/article')
+const User = require('../Models/user')
+const Comment = require('../Models/comment')
 
 exports.index = async ctx => {
   if(ctx.session.isNew){
